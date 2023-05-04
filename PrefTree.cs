@@ -8,15 +8,16 @@
         {
             _root = new Node();
         }
-        public void insert(string keyWord, string value)
+        public void insert(string value)
         {
             var node = _root;
-            foreach (char c in keyWord)
+            foreach (char c in value)
             {
                 if (node.child[c] == null)
                 {
                     node = node.Add(c);
                 }
+                else { node = node.child[c]; }
             }
             node.value = value;
             _prevValue = value;
@@ -31,7 +32,9 @@
                 {
                     return false;
                 }
+                node = node.child[c];
             }
+            if(node.value == null) { return false; }
             return true;
         }
 
@@ -42,8 +45,12 @@
             if (_prevValue == null)
                 return false;
             foreach (char c in prefix)
+            {
                 if (_prevValue[index] != c)
                     return false;
+
+                index++;
+            }
             return true;
         }
     }
